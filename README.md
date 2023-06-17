@@ -5,10 +5,10 @@ as a neat graphviz graph.
 
 
 ## Example
-![example graph](https://raw.githubusercontent.com/LeoVerto/docker-network-graph/master/example.png)
+![example graph](https://raw.githubusercontent.com/e-dant/docker-network-graph/release/example.png)
 
 ## Usage
-    usage: docker-net-graph.py [-h] [-v] [-o OUT]
+    usage: docker-network-graph.py [-h] [-v] [-o OUT]
 
     Visualize docker networks.
     
@@ -19,10 +19,10 @@ as a neat graphviz graph.
 
 In most cases what you want to run are the following couple commands:
 
-    git clone https://github.com/LeoVerto/docker-network-graph.git
+    git clone https://github.com/e-dant/docker-network-graph.git
     cd docker-network-graph
     pipenv install
-    pipenv run python docker-net-graph.py -o output.svg
+    pipenv run python docker-network-graph.py -o output.svg
 
 This will generate an .svg file containing the graph.
 
@@ -30,7 +30,7 @@ This will generate an .svg file containing the graph.
 If you want to generate a graph for a remote system you can also easily
 run this script inside a pre-built docker container:
     
-    docker run --rm -v /var/run/docker.sock:/var/run/docker.sock leoverto/docker-network-graph
+    docker run --rm -v /var/run/docker.sock:/var/run/docker.sock e-dant/docker-network-graph
 
 This will just generate and output the graph in the [DOT Language][dot].
 You can then paste that code into [GraphvizOnline][gvonline]

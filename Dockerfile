@@ -7,6 +7,6 @@ COPY Pipfile Pipfile.lock ./
 RUN pip install pipenv
 RUN pipenv install --system --deploy
 
-COPY docker-net-graph.py ./
+COPY docker-network-graph.py ./
 
-ENTRYPOINT ["python", "docker-net-graph.py"]
+ENTRYPOINT ["python", "docker-network-graph.py"]

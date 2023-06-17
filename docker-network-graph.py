@@ -64,7 +64,7 @@ def get_unique_color() -> str:
         i += 1
     else:
         # Generate random color if we've already used the 12 preset ones
-        c = "#%06x".format(random.randint(0, 0xFFFFFF))
+        c = '#'.join([f"{random.randint(0, 255):02x}" for _ in range(3)])
 
     return c
 

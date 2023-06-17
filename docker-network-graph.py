@@ -7,7 +7,7 @@ import docker
 import typing
 from dataclasses import dataclass
 from graphviz import Graph
-from graphviz.backend import FORMATS
+from graphviz.parameters.formats import FORMATS
 
 # colorlover.scales["12"]["qual"]["Paired"] converted to hex strings
 # Also some neutral colors from colormind.io

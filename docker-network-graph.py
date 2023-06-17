@@ -10,6 +10,7 @@ from graphviz import Graph
 from graphviz.backend import FORMATS
 
 # colorlover.scales["12"]["qual"]["Paired"] converted to hex strings
+# Also some neutral colors from colormind.io
 COLORS = [
     "#1f78b4",
     "#33a02c",
@@ -22,6 +23,13 @@ COLORS = [
     "#fdbf6f",
     "#cab2d6",
     "#ffff99",
+    "#0d8bad",
+    "#e98420",
+    "#0e9997",
+    "#6a5164",
+    "#afa277",
+    "#149ead",
+    "#a54a56",
 ]
 i = 0
 

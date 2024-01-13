@@ -58,5 +58,5 @@ using dummy containers in `test`.
 You can deploy it using `docker-compose -f docker-compose.yml up -d`.
 
 ## Credit
-[dot]: https://www.graphviz.org/doc/info/lang.html
-[gvonline]: https://dreampuf.github.io/GraphvizOnline/
+[dot lang](https://www.graphviz.org/doc/info/lang.html)
+[gvonline](https://dreampuf.github.io/GraphvizOnline/)

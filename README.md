@@ -28,7 +28,7 @@ If you want to generate a graph for a remote system you can also easily
 run this script inside a pre-built docker container:
 
 ```bash
-docker run --rm -v /var/run/docker.sock:/var/run/docker.sock muratovas/docker-network-graph -u
+docker run --rm -v /var/run/docker.sock:/var/run/docker.sock ghcr.io/muratovas/docker-network-graph:latest -u
 ```
 
 For more advanced use cases you can append arguments to the `docker run`
@@ -59,7 +59,10 @@ generate the file.
 If you'd like to contribute to this project, there is a sample docker-compose file
 using dummy containers in `test`.
 
-You can deploy it using `docker-compose -f docker-compose.yml up -d`.
+You can deploy it using 
+```bash
+docker-compose -f docker-compose.yml up -d
+```
 
 ## Credit
 

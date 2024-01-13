@@ -1,6 +1,0 @@
-#! /usr/bin/env bash
-
-(
-  cd "$(dirname "$0")/.." \
-  && pipenv run python docker-network-graph.py -o output.svg
-)

@@ -5,6 +5,7 @@ import argparse
 import random
 import docker
 import typing
+import urllib.parse
 from dataclasses import dataclass
 from graphviz import Graph
 from graphviz.parameters.formats import FORMATS
@@ -152,7 +153,8 @@ def get_containers(
 
 
 def draw_network(g: Graph, net: Network):
-    label = f"{{<gw_iface> {net.gateway} | {net.name}"
+    # <gw_iface> {net.gateway} | 
+    label = f"{{{net.name}"
     if net.internal:
         label += " | Internal"
     if net.isolated:
@@ -163,8 +165,8 @@ def draw_network(g: Graph, net: Network):
         f"network_{net.name}",
         shape="record",
         label=label,
-        fillcolor=net.color,
-        style="filled",
+        color=net.color + "60",
+        style="filled,rounded",
     )
 
 
@@ -186,7 +188,7 @@ def draw_container(g: Graph, c: Container):
         f"container_{c.container_id}",
         shape="record",
         label=label,
-        fillcolor="#ff9999",
+        fillcolor="#cdcdcd",
         style="filled",
     )
 
@@ -199,7 +201,7 @@ def draw_link(g: Graph, networks: typing.Dict[str, Network], link: Link):
     )
 
 
-def generate_graph(verbose: bool, file: str):
+def generate_graph(verbose: bool, file: str, url: str):
     docker_client = docker.from_env()
 
     networks = get_networks(docker_client, verbose)
@@ -230,10 +232,23 @@ def generate_graph(verbose: bool, file: str):
         if link.network_name != "none":
             draw_link(g, networks, link)
 
+    for _, network in networks.items():
+        if network.internal != True:
+            if network.name != "host":
+                g.edge(
+                    f"network_{network.name}",
+                    f"network_host",
+                    color="#808080",
+                    style="dotted",
+                )
+            
     if file:
         g.render(base)
     else:
-        print(g.source)
+        if url:
+            print("https://dreampuf.github.io/GraphvizOnline/#" + urllib.parse.quote(g.source))
+        else:
+            print(g.source)
 
 
 def graphviz_output_file(filename: str):
@@ -242,13 +257,12 @@ def graphviz_output_file(filename: str):
         raise argparse.ArgumentTypeError("Must be valid graphviz output format")
     return filename
 
-
+    
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Visualize docker networks.")
-    parser.add_argument("-v", "--verbose", help="Verbose output", action="store_true")
-    parser.add_argument(
-        "-o", "--out", help="Write output to file", type=graphviz_output_file
-    )
+    parser.add_argument("-v", "--verbose", help="verbose output", action="store_true")
+    parser.add_argument("-o", "--out", help="write output to file", type=graphviz_output_file)
+    parser.add_argument("-u", "--url", help="generate link for GraphvizOnline", action="store_true")
     args = parser.parse_args()
 
-    generate_graph(args.verbose, args.out)
+    generate_graph(args.verbose, args.out, args.url)

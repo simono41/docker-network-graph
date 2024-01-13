@@ -8,6 +8,7 @@ Changes:
 - Improved design
 - Added the ability to generate url
 - Added display of connections with the host
+- Github package
 
 ## Example
 ![example graph](./example.png)

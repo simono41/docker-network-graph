@@ -194,10 +194,18 @@ def draw_container(g: Graph, c: Container):
 
 
 def draw_link(g: Graph, networks: typing.Dict[str, Network], link: Link):
+    if networks[link.network_name].isolated:
+        style="dashed"
+    elif  networks[link.network_name].name == "host":
+        style="bold"
+    else:
+        style="solid"
+        
     g.edge(
         f"container_{link.container_id}:{link.endpoint_id}",
         f"network_{link.network_name}",
         color=networks[link.network_name].color,
+        style=style,
     )
 
 

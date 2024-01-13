@@ -23,6 +23,14 @@ services:
         - network_b
         - network_c
         - no_gateway
+    service_4:
+      container_name: service_4
+      image: leoverto/dummy-image
+      ports:
+        - "1234:1234"
+        - "0.0.0.0:5678:5678/udp"
+      networks:
+        - internet
     host_service:
       container_name: host_service
       image: leoverto/dummy-image
@@ -33,6 +41,9 @@ services:
       network_mode: none
 
 networks:
+  internet: 
+    driver_opts:
+      com.docker.network.bridge.enable_icc: "false"
   network_a:
   network_b:
   network_c:

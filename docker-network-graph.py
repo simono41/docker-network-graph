@@ -50,12 +50,16 @@ class Interface:
     address: str
     aliases: typing.List[str]
 
-
+@dataclass
+class Port:
+    port: str
+    
 @dataclass
 class Container:
     container_id: str
     name: str
     interfaces: typing.List[Interface]
+    ports: typing.List[Interface]
 
 
 @dataclass
@@ -125,11 +129,13 @@ def get_containers(
 
     for container in client.containers.list():
         interfaces: typing.List[Interface] = []
+        ports: typing.List[Port] = []
+
+        for port_name, port_info in container.attrs["NetworkSettings"]["Ports"].items():
+            ports.append(Port(port_name))
 
         # Iterate over container interfaces
-        for net_name, net_info in container.attrs["NetworkSettings"][
-            "Networks"
-        ].items():
+        for net_name, net_info in container.attrs["NetworkSettings"]["Networks"].items():
             endpoint_id = net_info["EndpointID"]
 
             aliases = []
@@ -143,11 +149,9 @@ def get_containers(
             links.append(Link(container.id, endpoint_id, net_name))
 
         if verbose:
-            print(
-                f"Container: {container.name} {''.join([iface.address for iface in interfaces])}"
-            )
+            print(f"Container: {container.name} {ports} {''.join([iface.address for iface in interfaces])}")
 
-        containers.append(Container(container.id, container.name, interfaces))
+        containers.append(Container(container.id, container.name, interfaces, ports))
 
     return containers, links
 
@@ -172,6 +176,12 @@ def draw_network(g: Graph, net: Network):
 
 def draw_container(g: Graph, c: Container):
     iface_labels = []
+    port_labels = []
+    
+    for iport in c.ports:
+        port_label = "{"
+        port_label += f"{iport.port} }}"
+        port_labels.append(port_label)
 
     for iface in c.interfaces:
         iface_label = "{"
@@ -181,8 +191,11 @@ def draw_container(g: Graph, c: Container):
 
         iface_label += f"<{iface.endpoint_id}> {iface.address} }}"
         iface_labels.append(iface_label)
-
-    label = f"{{ {c.name} | {{ {' | '.join(iface_labels)} }} }}"
+    
+    label =f"{{ {c.name} "
+    if port_labels:
+        label = label + f"| {{ {' | '.join(port_labels)} }} "
+    label = label + f"| {{ {' | '.join(iface_labels)} }} }}"
 
     g.node(
         f"container_{c.container_id}",

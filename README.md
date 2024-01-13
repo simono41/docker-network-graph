@@ -8,10 +8,11 @@ Changes:
 - Improved design
 - Added the ability to generate url
 - Added display of connections with the host
+- Visualization of ports
 - Github package
 
 ## Example
-![example graph](./example.png)
+![example graph](./example.svg)
 
 ## Usage
 ```bash

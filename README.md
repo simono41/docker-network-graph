@@ -13,21 +13,23 @@ Changes:
 ![example graph](./example.png)
 
 ## Usage
+```bash
     usage: docker-network-graph.py [-h] [-v] [-o OUT] [-u]
-
     Visualize docker networks.
-    
     optional arguments:
       -h, --help         Show this help message and exit
       -v, --verbose      Verbose output
       -o OUT, --out OUT  Write output to file [not supported by container]
       -u, --url          Generate link for GraphvizOnline
+```
 
 ## Running inside docker
 If you want to generate a graph for a remote system you can also easily
 run this script inside a pre-built docker container:
-    
-    docker run --rm -v /var/run/docker.sock:/var/run/docker.sock e-dant/docker-network-graph -u
+
+```bash
+docker run --rm -v /var/run/docker.sock:/var/run/docker.sock muratovas/docker-network-graph -u
+```
 
 For more advanced use cases you can append arguments to the `docker run`
 command as if you were running it in a local shell.
@@ -35,10 +37,12 @@ command as if you were running it in a local shell.
 ## Running local
 In most cases what you want to run are the following couple commands:
 
-    git clone https://github.com/e-dant/docker-network-graph.git
-    cd docker-network-graph
-    pipenv install
-    pipenv run python docker-network-graph.py -o output.svg
+```bash
+git clone https://github.com/muratovas/docker-network-graph.git
+cd docker-network-graph
+pipenv install
+pipenv run python docker-network-graph.py -o output.svg
+```
 
 This will generate an .svg file containing the graph.
 
@@ -58,5 +62,7 @@ using dummy containers in `test`.
 You can deploy it using `docker-compose -f docker-compose.yml up -d`.
 
 ## Credit
+
 [dot lang](https://www.graphviz.org/doc/info/lang.html)
+
 [gvonline](https://dreampuf.github.io/GraphvizOnline/)

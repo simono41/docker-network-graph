@@ -32,15 +32,15 @@ run this script inside a pre-built docker container:
 ```bash
 build container
 
-    docker build . -t simono41/docker-network-graph
+    docker build . -t code.brothertec.eu/simono41/docker-network-graph:latest
 
 and create a PNG
 
-    docker run --rm -v /var/run/docker.sock:/var/run/docker.sock simono41/docker-network-graph | dot -Tpng -o out.png
+    docker run --rm -v /var/run/docker.sock:/var/run/docker.sock code.brothertec.eu/simono41/docker-network-graph:latest | dot -Tpng -o out.png
 
 or as SVG
 
-    docker run --rm -v /var/run/docker.sock:/var/run/docker.sock simono41/docker-network-graph | dot -Tsvg -o out.svg
+    docker run --rm -v /var/run/docker.sock:/var/run/docker.sock code.brothertec.eu/simono41/docker-network-graph:latest | dot -Tsvg -o out.svg
 
 ```
 
@@ -51,7 +51,7 @@ command as if you were running it in a local shell.
 In most cases what you want to run are the following couple commands:
 
 ```bash
-git clone https://github.com/simono41/docker-network-graph.git
+git clone https://code.brothertec.eu/simono41/docker-network-graph.git
 cd docker-network-graph
 pipenv install
 pipenv run python docker-network-graph.py -o output.svg

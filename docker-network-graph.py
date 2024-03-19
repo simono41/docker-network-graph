@@ -233,13 +233,13 @@ def generate_graph(verbose: bool, file: str, url: str):
             comment="Docker Network Graph",
             engine="sfdp",
             format=ext[1:],
-            graph_attr={'splines': 'true', 'rankdir': 'LR'},
+            graph_attr=dict(splines="true", rankdir="LR", bgcolor="transparent"),
         )
     else:
         g = Graph(
             comment="Docker Network Graph",
             engine="sfdp",
-            graph_attr={'splines': 'true', 'rankdir': 'LR'},
+            graph_attr=dict(splines="true", rankdir="LR", bgcolor="transparent"),
         )
 
     for _, network in networks.items():

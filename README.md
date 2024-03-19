@@ -29,19 +29,22 @@ Changes:
 If you want to generate a graph for a remote system you can also easily
 run this script inside a pre-built docker container:
 
-```bash
 build container
 
+```bash
     docker build . -t code.brothertec.eu/simono41/docker-network-graph:latest
+```
 
 and create a PNG
 
+```bash
     docker run --rm -v /var/run/docker.sock:/var/run/docker.sock code.brothertec.eu/simono41/docker-network-graph:latest | dot -Tpng -o out.png
+```
 
 or as SVG
 
+```bash
     docker run --rm -v /var/run/docker.sock:/var/run/docker.sock code.brothertec.eu/simono41/docker-network-graph:latest | dot -Tsvg -o out.svg
-
 ```
 
 For more advanced use cases you can append arguments to the `docker run`

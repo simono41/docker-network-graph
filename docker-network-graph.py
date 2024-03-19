@@ -77,10 +77,9 @@ def get_unique_color() -> str:
         i += 1
     else:
         # Generate random color if we've already used the 12 preset ones
-        c = '#'.join([f"{random.randint(0, 255):02x}" for _ in range(3)])
+        c = "#{:06x}".format(random.randint(0, 0xFFFFFF))
 
     return c
-
 
 def get_networks(
     client: docker.DockerClient, verbose: bool
@@ -90,7 +89,7 @@ def get_networks(
     for net in sorted(client.networks.list(), key=lambda k: k.name):
         try:
             gateway = net.attrs["IPAM"]["Config"][0]["Subnet"]
-        except (KeyError, IndexError):
+        except (KeyError, IndexError, TypeError):
             # This network doesn't seem to be used, skip it
             continue
 
@@ -234,13 +233,13 @@ def generate_graph(verbose: bool, file: str, url: str):
             comment="Docker Network Graph",
             engine="sfdp",
             format=ext[1:],
-            graph_attr=dict(splines="true"),
+            graph_attr={'splines': 'true', 'rankdir': 'LR'},
         )
     else:
         g = Graph(
             comment="Docker Network Graph",
             engine="sfdp",
-            graph_attr=dict(splines="true"),
+            graph_attr={'splines': 'true', 'rankdir': 'LR'},
         )
 
     for _, network in networks.items():

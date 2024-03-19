@@ -3,7 +3,7 @@
 Visualize the relationship between Docker networks and containers
 as a neat graphviz graph.
 
-This repository fork [e-dant/docker-network-graph](https://github.com/e-dant/docker-network-graph)
+This repository fork [MuratovAS/docker-network-graph](https://github.com/MuratovAS/docker-network-graph)
 Changes:
 - Improved design
 - Added the ability to generate url
@@ -30,7 +30,18 @@ If you want to generate a graph for a remote system you can also easily
 run this script inside a pre-built docker container:
 
 ```bash
-docker run --rm -v /var/run/docker.sock:/var/run/docker.sock ghcr.io/muratovas/docker-network-graph:latest -u
+build container
+
+    docker build . -t simono41/docker-network-graph
+
+and create a PNG
+
+    docker run --rm -v /var/run/docker.sock:/var/run/docker.sock simono41/docker-network-graph | dot -Tpng -o out.png
+
+or as SVG
+
+    docker run --rm -v /var/run/docker.sock:/var/run/docker.sock simono41/docker-network-graph | dot -Tsvg -o out.svg
+
 ```
 
 For more advanced use cases you can append arguments to the `docker run`
@@ -40,7 +51,7 @@ command as if you were running it in a local shell.
 In most cases what you want to run are the following couple commands:
 
 ```bash
-git clone https://github.com/muratovas/docker-network-graph.git
+git clone https://github.com/simono41/docker-network-graph.git
 cd docker-network-graph
 pipenv install
 pipenv run python docker-network-graph.py -o output.svg
